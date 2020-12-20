@@ -1,0 +1,28 @@
+{
+  "name": "elconcurso",
+  "version": "1.0.0",
+  "description": "WIP",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode=production --config webpack.config.js",
+    "build:dev": "webpack --mode=development --config webpack.config.js",
+    "watch": "webpack --mode=production --config webpack.config.js --watch",
+    "watch:dev": "webpack --mode=development --config webpack.config.js --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jagobagascon/elconcurso.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jagobagascon/elconcurso/issues"
+  },
+  "homepage": "https://github.com/jagobagascon/elconcurso#readme",
+  "devDependencies": {
+    "file-loader": "^6.2.0",
+    "webpack": "^5.11.1",
+    "webpack-cli": "^4.3.0"
+  }
+}

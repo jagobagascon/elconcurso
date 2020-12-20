@@ -1,0 +1,35 @@
+name: Build client and server and push to production
+
+on:
+  push:
+    branches: 
+      - main
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: init
+      run: |
+        docker build -f Dockerfile -t elconcurso-build .
+        docker run --rm -i -d -v $(pwd):/workspace --name elconcurso-build elconcurso-build
+    
+    - name: prepare
+      run: docker exec -i elconcurso-build npm install
+    - name: build
+      run: docker exec -i elconcurso-build npm run build
+    # Push to gh-pages
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@releases/v3
+      with:
+        ACCESS_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
+        BRANCH: production # The branch the action should deploy to.
+        FOLDER: dist # The folder the action should deploy.
+        SINGLE_COMMIT: true
+
+    - name: clean
+      run: |
+        docker exec -i elconcurso-build rm -rf dist
+        docker stop elconcurso-build
