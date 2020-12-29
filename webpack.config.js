@@ -8,14 +8,23 @@ module.exports = {
         filename: '[name]/main.bundle.js'
     },
     module: {
-        rules: [{
-            test: /\.(png|jpe?g|gif|html|css)$/i,
-            use: [{
-                loader: 'file-loader',
-                options: {
-                    name: '[path][name].[ext]',
-                }
-            }],
-        }],
+        rules: [
+            // files
+            {
+                test: /\.(png|jpe?g|gif|html)$/i,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: '[path][name].[ext]',
+                    }
+                }],
+            },
+            // css
+            {
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader'],
+            },
+        
+        ],
     },
 };

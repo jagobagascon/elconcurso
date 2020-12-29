@@ -5,6 +5,7 @@ export class GameClient {
         this.state = GameState.DISCONNECTED;
         this.joinSessionId = joinSessionId;
         this.link = link;
+        this.session = null;
     }
 
     setup(receiverListener) {
@@ -16,6 +17,12 @@ export class GameClient {
     
         chrome.cast.initialize(apiConfig, () => this.onInitSuccess(),
             e => console.error(e));
+    }
+
+    leave() {
+        if (this.session) {
+            this.session.leave();
+        }
     }
     
     onInitSuccess() {
@@ -31,7 +38,7 @@ export class GameClient {
     sessionListener(s) {
         this.session = s;
         this.state = GameState.LOBBY;
-        
+
         s.addUpdateListener(isAlive => this.sessionUpdate(isAlive));
         s.addMessageListener(common.namespace, msg => this.processMessage(msg));
     }

@@ -24,3 +24,6 @@ function receiverListener(status) {
     }
 }
 
+window.onbeforeunload = function(e) {
+    gameClient.leave();
+}
