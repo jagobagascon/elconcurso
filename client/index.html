@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="../favicon.png" rel="icon" type="image/ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="content">
+    </div>
+    
+    <script>
+        let local = (new URLSearchParams(window.location.search)).get('local');
+
+        var scripts = [];
+        scripts.push("//www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1");
+        if (local != null) {
+            scripts.push("../../mockast/mockast-sender.js");
+        }
+        scripts.push("main.bundle.js");
+
+        // load scripts
+        var index = 0;
+        addScripts();
+        function addScripts() {
+            if (index >= scripts.length) {
+                return;
+            }
+
+            var script = document.createElement('script');
+            script.src = scripts[index];
+            script.type='text/javascript';
+            var done = false;
+            script.onload = script.onreadystatechange = function() {
+                if (!done && (!this.readyState || this.readyState == "loaded" || this.readyState == "complete")) {
+                    index++;
+                    addScripts();
+                }
+            };  
+            document.getElementsByTagName("head")[0].appendChild(script);
+        }
+    </script>
+</body>
+</html>
