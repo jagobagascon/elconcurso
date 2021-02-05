@@ -10,3 +10,14 @@ export const GameState = {
     LOBBY: 1,
     STARTED: 2,
 }
+
+export const Events = {
+    PlayerNameChanged: 0,
+}
+
+export class Message {
+    constructor(event, data){
+        this.event = event;
+        this.data = data;
+    }
+}

@@ -16,7 +16,7 @@ export class Lobby {
                 {{#players}}
                     <li class="player-item">
                         <div class="player-picture"></div>
-                        <span class="player-name">{{id}}</span>
+                        <span class="player-name">{{name}}</span>
                     </li>
                 {{/players}}
             </ul>

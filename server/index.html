@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link href="../favicon.png" rel="icon" type="image/ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
     <div id="content">
@@ -12,7 +15,7 @@
         var scripts = [];
         scripts.push("//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js");
         if (local != null) {
-            scripts.push("../../mockast/mockast.js");
+            scripts.push("../../mockast/mockast-receiver.js");
         }
         scripts.push("main.bundle.js");
 

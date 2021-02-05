@@ -23,4 +23,10 @@ export class GameData {
             delete this._players[player.senderId];
         }
     }
+
+    setPlayerName(playerId, name) {
+    if (this._players[playerId]) {
+        this._players[playerId].name = name;
+    }
+    }
 }

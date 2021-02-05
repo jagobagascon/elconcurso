@@ -1,6 +1,6 @@
 
 require('./index.html');
-require('./favicon.png');
+require('../favicon.png');
 
 import { GameServer } from './game-server';
 

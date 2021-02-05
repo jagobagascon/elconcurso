@@ -1,15 +1,15 @@
 import './game-server.css';
 
-import { common, GameState } from '../common/common';
+import { common, GameState, Events } from '../common/common';
 import { Lobby } from './lobby/lobby'
-import { GameData } from './game_data';
+import { GameData } from './game-data';
 
 export class GameServer {
     constructor(debug) {
         this.gameData = new GameData();
         this.gameData.state = GameState.LOBBY;
         
-        this.lobby = new Lobby();
+        this.scene = new Lobby();
 
         this.contentDiv = document.getElementById('content');
 
@@ -56,13 +56,26 @@ export class GameServer {
             return;
         }
 
-        // process message
-        console.warn(e);
+        if (e.namespace != common.namespace) {
+            // ignore message
+            return;
+        }
+        
+        if (e.data.event == Events.PlayerNameChanged) {
+            // update player name
+            this.gameData.setPlayerName(e.senderId, e.data.data);
+            this.updateContent()
+        }
+
+        // log message
+        console.error(e);
+        console.error(e.data);
+        console.error(e.data.event);
     }
 
     updateContent() {
-        if (this.state = GameState.LOBBY) {
-            var content = this.lobby.render(this.gameData);
+        if (this.scene) {
+            var content = this.scene.render(this.gameData);
             this.contentDiv.innerHTML = content;
         }
     }

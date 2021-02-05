@@ -1,29 +1,25 @@
 require('./index.html');
+require('../favicon.png');
 
 import { GameClient } from './game-client';
 
 let joinSessionId = (new URLSearchParams(window.location.search)).get('sessionId');
 let sessionId = document.getElementById("session-id");
 let gameClient = new GameClient(joinSessionId, sessionId);
-
-// UI elements
-let createSessionButton = document.getElementById("create-session");
-createSessionButton.addEventListener("click", e => gameClient.doCreateSession());
+window.client = gameClient;
 
 window['__onGCastApiAvailable'] = function(isAvailable) {
     if (isAvailable) {
-        gameClient.setup(receiverListener);
+        gameClient.setup();
     }
 };
 
-function receiverListener(status) {
-    if (status == chrome.cast.ReceiverAvailability.AVAILABLE) {
-        createSessionButton.removeAttribute('disabled');
-    } else {
-        createSessionButton.setAttribute('disabled', 'disabled');
-    }
+window.onbeforeunload = function(e) {
+    gameClient.teardown();
 }
 
-window.onbeforeunload = function(e) {
-    gameClient.leave();
+window.action = function(action) {
+    if (gameClient) {
+        gameClient.action(action)
+    }
 }
